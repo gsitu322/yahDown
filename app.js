@@ -1,15 +1,25 @@
 var express = require('express');
+var router = express.Router();
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-
+var config = require('./config/database');
 var appRoutes = require('./routes/app');
+var authentication = require('./routes/authentication')(router); // Import Authentication Routes
 
 var app = express();
-mongoose.connect('mongodb://localhost:27017/yahDownDB', { useMongoClient: true })
+mongoose.Promise = global.Promise;
+mongoose.connect(config.uri, (err) => {
+    if (err) {
+        console.log('Could NOT connect to database: ', err);
+    } else {
+        console.log('Connected to database: ' + config.db);
+}
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -21,6 +31,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/authentication', authentication);
 
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
