@@ -3,6 +3,9 @@ var router  = express.Router();
 
 var Project = require('../models/project');
 
+/**
+ * GET route to retrieve all Projects
+ */
 router.get('/', function (req, res, next) {
     Project.find()
         .populate('user')
@@ -20,6 +23,9 @@ router.get('/', function (req, res, next) {
         });
 });
 
+/**
+ * POST Route to creste new projects
+ */
 router.post('/', function(req, res, next) {
     Project.create(req.body, function(err, project) {
         if (err) {
@@ -36,6 +42,39 @@ router.post('/', function(req, res, next) {
     });
 });
 
+/**
+ * PATCH Route to update a project
+ */
+router.patch('/:id', function (req, res, next) {
+
+    Project.findById(req.params.id, function(err, project) {
+
+        if (err) {
+            return res.status(500).json({
+                message: 'Project could not be found',
+                error: err
+            });
+        }
+
+        project.update(req.body, function (err) {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Failed to update Project',
+                    error: err
+                });
+            }
+
+            res.status(200).json({
+                message: 'Successfully Updated Project',
+                project: project
+            });
+        })
+    });
+});
+
+/**
+ * DELETE Route to remove Project
+ */
 router.delete('/:id', function(req, res, next) {
 
     Project.findById(req.params.id, function(err, projectFound) {
@@ -67,6 +106,5 @@ router.delete('/:id', function(req, res, next) {
         });
     });
 });
-
 
 module.exports = router;
