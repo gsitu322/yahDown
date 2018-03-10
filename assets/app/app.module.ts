@@ -8,6 +8,7 @@ import { NavbarComponent } from "./components/navbar/navbar.component";
 import { AppComponent } from "./app.component";
 import { ProjectModule } from "./components/project/project.module";
 import { ProjectComponent } from "./components/project/project.component";
+import { HttpClientModule } from "@angular/common/http";
 const appRoutes: Routes = [
     {
         path: '',
@@ -35,6 +36,7 @@ const appRoutes: Routes = [
     imports: [
         BrowserModule,
         ProjectModule,
+        HttpClientModule,
         RouterModule.forRoot(appRoutes)
 ],
 bootstrap: [AppComponent],

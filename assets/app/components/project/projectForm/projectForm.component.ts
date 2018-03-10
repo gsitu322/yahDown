@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {FormGroup, FormControl, Validators} from "@angular/forms";
-import {ProjectSerivce} from "../project.service";
+import {ProjectService} from "../project.service";
 import {Router} from "@angular/router";
 import {Project} from "../project.model";
 
@@ -12,10 +12,21 @@ import {Project} from "../project.model";
 export class ProjectFormComponent implements OnInit  {
     myForm: FormGroup;
 
-    constructor(private projectService: ProjectSerivce, private router: Router){}
+    constructor(private projectService: ProjectService, private router: Router){}
 
     onSubmit() {
-        console.log(this.myForm);
+        const project = new Project(
+            this.myForm.value.name,
+            this.myForm.value.description,
+            this.myForm.value.milestones,
+            this.myForm.value.technologies
+        );
+
+        this.projectService.saveProject(project)
+            .subscribe(
+                data => console.log(data),
+                error => console.error(error)
+            );
     }
 
     ngOnInit() {

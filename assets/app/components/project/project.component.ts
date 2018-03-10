@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import {ProjectSerivce} from "./project.service";
+import {ProjectService} from "./project.service";
 
 @Component({
     selector: 'app-project',
@@ -18,5 +18,5 @@ import {ProjectSerivce} from "./project.service";
     `
 })
 export class ProjectComponent {
-    constructor(private projectService: ProjectSerivce) {}
+    constructor(private projectService: ProjectService) {}
 }
