@@ -8,7 +8,6 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var config = require('./config/database');
 var appRoutes = require('./routes/app');
-var projectRoutes = require('./routes/project');
 var authentication = require('./routes/authentication')(router); // Import Authentication Routes
 
 var app = express();
@@ -43,7 +42,6 @@ app.use(function (req, res, next) {
 
 
 /** Routes */
-app.use('/project', projectRoutes);
 app.use('/authentication', authentication);
 app.use('/', appRoutes);
 
