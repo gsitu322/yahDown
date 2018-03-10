@@ -7,6 +7,7 @@ import { RegisterComponent } from "./components/register/register.component"
 import { NavbarComponent } from "./components/navbar/navbar.component";
 import { AppComponent } from "./app.component";
 import { ProjectModule } from "./components/project/project.module";
+import { ProjectComponent } from "./components/project/project.component";
 const appRoutes: Routes = [
     {
         path: '',
@@ -16,6 +17,7 @@ const appRoutes: Routes = [
         path: 'register',
         component: RegisterComponent
     },
+    { path: 'project', component: ProjectComponent, loadChildren: './components/project/project.module#ProjectModule' },
     {
         path: '**',
         component: HomeComponent
@@ -27,7 +29,8 @@ const appRoutes: Routes = [
         AppComponent,
         NavbarComponent,
         HomeComponent,
-        RegisterComponent
+        RegisterComponent,
+        ProjectComponent,
     ],
     imports: [
         BrowserModule,
